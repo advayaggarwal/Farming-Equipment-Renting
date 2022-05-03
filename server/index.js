@@ -2,6 +2,7 @@ const express = require("express"),
   mongoose = require("mongoose"),
   bodyParser = require("body-parser"),
   User = require("./models/User"),
+  Item = require("./models/Item"),
   app = express(),
   cors = require("cors"),
   PORT = process.env.PORT || 4500;
@@ -49,6 +50,19 @@ app.post("/login", async (req, res) => {
     message: "Email or Password is incorrect",
   });
 });
+
+app.post("/rent", async (req, res) => {
+  try {
+    const newItem = await new Item(req.body);
+    await newItem.save();
+    return res.send({ status: 200, message: "new Item created successfully" });
+  } catch (err) {
+    return res.status(500).send({
+      error: err,
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log("Server listening at port:-", PORT);
 });
