@@ -63,6 +63,12 @@ app.post("/rent", async (req, res) => {
   }
 });
 
+app.get("/items", (req, res) => {
+  Item.find({}, function (err, items) {
+    res.json(items);
+  });
+});
+
 app.listen(PORT, () => {
   console.log("Server listening at port:-", PORT);
 });
