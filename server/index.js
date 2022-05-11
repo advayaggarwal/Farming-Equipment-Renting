@@ -8,7 +8,7 @@ const express = require("express"),
   PORT = process.env.PORT || 4500;
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/RBAC", {
+  .connect("mongodb://127.0.0.1:27017/Farm", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -45,10 +45,29 @@ app.get("/userInfo", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.exists({ email, password });
-  if (user) return res.send({ status: 200, data: { email, password } });
-  return res.status(404).send({
-    message: "Email or Password is incorrect",
-  });
+  // console.log(user);
+  if (user) {
+    User.findById(user._id, (err, u) => {
+      if (u) {
+        res.send({
+          status: 200,
+          data: {
+            email: u.email,
+            password: u.password,
+            metamask_account: u.metamask_account,
+          },
+        });
+      } else {
+        return res.status(404).send({
+          message: "Email or Password is incorrect",
+        });
+      }
+    });
+  } else {
+    return res.status(404).send({
+      message: "Email or Password is incorrect",
+    });
+  }
 });
 
 app.post("/rent", async (req, res) => {
