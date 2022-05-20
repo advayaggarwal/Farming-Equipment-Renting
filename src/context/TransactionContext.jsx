@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import { contractABI, contractAddress } from "../utils/constants";
 
 export const TransactionContext = React.createContext();
-
+/* eslint-disable */
 const { ethereum } = window;
 
 const createEthereumContract = () => {

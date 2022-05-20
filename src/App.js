@@ -38,6 +38,9 @@ function App() {
             )}
             {localStorage.getItem("loggedIn") && (
               <>
+                {/* <li className="bg-slate-100">
+                  <Link to="/connectWallet">Connect Wallet</Link>
+                </li> */}
                 <li className="bg-slate-100">
                   <Link to="/rent">Rent</Link>
                 </li>
